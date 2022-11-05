@@ -1,4 +1,7 @@
 import React from "react";
+import Link from '@mui/material/Link';
+import LaunchIcon from '@mui/icons-material/Launch';
+import ClearIcon from '@mui/icons-material/Clear';
 
 const article_titles = [
   {
@@ -99,8 +102,10 @@ const Profile = () => {
 
               <div>
                 {picked_topics.map((topic, index) => (
-                  <div className="text-left ml-10 w-1/5 p-1 bg-purple-500 mt-2 "> {index + 1}. {topic.topic}  </div>
-
+                  <div className="text-left ml-10 w-1/5 p-1 bg-purple-500 mt-2 ">
+                    {index + 1}. {topic.topic}
+                    <ClearIcon onClick={() => { console.log("closed") }} />
+                  </div>
                 ))}
 
               </div>
@@ -108,8 +113,14 @@ const Profile = () => {
             <div className="mx-auto w-full h-3/6 text-slate-100 mt-10 border border-emerald-600 overflow-scroll"> Saved Stories
 
               {article_titles.map((article, index) => (
-                <div className="text-left ml-10 w-4/5 p-2 bg-purple-900 mt-2 rounded-xl"> {index + 1}. {article.title}</div>
+                <div className="text-left ml-10 w-4/5 p-2 bg-purple-900 mt-2 rounded-xl">
+                  {index + 1}. {article.title}
+                  <Link href="www.google.com" color="primary">
+                    <LaunchIcon />
+                  </Link>
+                </div>
               ))}
+
 
             </div>
           </div>
