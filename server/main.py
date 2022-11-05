@@ -14,6 +14,7 @@ def getTopHeadlinesNewsArticlesForUser():
   query = request.args.to_dict()
   if query.get('userName', -1) == -1:
     return Response('No userName provided in query params', status=403)
+  # Change the below line after integrating with the DB
   userPrefs = 'category=' + '&category='.join([userPreferences[random.randint(0, 6)] for i in range(2)])
   url = NEWS_API_TOPHEADLINES_ENDPOINT+f'?country=in&{userPrefs}&apiKey={NEWS_API_KEY}'
   apiResponse = requests.get(url=url)
