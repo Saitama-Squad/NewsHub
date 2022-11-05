@@ -17,4 +17,4 @@ def getTopHeadlinesNewsArticlesForUser():
   userPrefs = 'category=' + '&category='.join([userPreferences[random.randint(0, 6)] for i in range(2)])
   url = NEWS_API_TOPHEADLINES_ENDPOINT+f'?country=in&{userPrefs}&apiKey={NEWS_API_KEY}'
   apiResponse = requests.get(url=url)
-  return Response(apiResponse.content.decode('utf-8'), status=200)
+  return Response(apiResponse.content.decode(), status=200)
