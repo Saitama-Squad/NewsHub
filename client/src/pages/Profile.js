@@ -2,6 +2,9 @@ import React from "react";
 import Link from '@mui/material/Link';
 import LaunchIcon from '@mui/icons-material/Launch';
 import ClearIcon from '@mui/icons-material/Clear';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
 
 const article_titles = [
   {
@@ -49,6 +52,15 @@ const picked_topics = [
   },
   {
     topic: "politics"
+  },
+  {
+    topic: "technology"
+  },
+  {
+    topic: "government"
+  },
+  {
+    topic: "politics"
   }
 ]
 
@@ -61,8 +73,15 @@ const Profile = () => {
         <div className="flex mt-10 h-1/3 justify-center">
 
           <div className="w-1/4 h-full border-2 border-slate-600">
-            <div className="mx-auto h-4/6 text-red-500 w-fit mt-10 align-text-bottom text-center">Profile Picture</div>
-            <div className="mx-auto w-fit h-1/6 text-slate-100"> Social media handles</div>
+            <div className="mx-auto h-4/6">
+              Profile Picture
+              <img src="https://imgv3.fotor.com/images/blog-cover-image/10-profile-picture-ideas-to-make-you-stand-out.jpg" alt="Logo" />
+            </div>
+            <div className="mx-auto mt-5 w-fit h-1/6 text-slate-100">
+              <LinkedInIcon />
+              <FacebookIcon />
+              <InstagramIcon />
+            </div>
           </div>
 
           <div className="w-2/4 bg-red-700 mx-9 h-5/6">
@@ -98,13 +117,15 @@ const Profile = () => {
           <div className="w-2/4 h-full ml-10">
 
             <div className="mx-auto h-2/6 text-slate-100 w-full align-text-bottom border border-emerald-600 overflow-scroll">
-              <input type="text" placeholder="Search.." className="m-1 p-1" />
+              {/* <input type="text" placeholder="Search.." className="m-1 p-1" /> */}
 
-              <div>
+              <div className="bg-blue-800 w-fit p-2 rounded-md m-2 text-center" onClick={() => { console.log("adding more tags") }}>Add More Categories</div>
+
+              <div className="grid grid-cols-3">
                 {picked_topics.map((topic, index) => (
-                  <div className="text-left ml-10 w-1/5 p-1 bg-purple-500 mt-2 ">
+                  <div className="text-left ml-10 w-fit p-1 bg-purple-500 mt-2 ">
                     {index + 1}. {topic.topic}
-                    <ClearIcon onClick={() => { console.log("closed") }} />
+                    <ClearIcon color="error" onClick={() => { console.log("closed") }} />
                   </div>
                 ))}
 
@@ -120,7 +141,6 @@ const Profile = () => {
                   </Link>
                 </div>
               ))}
-
 
             </div>
           </div>
