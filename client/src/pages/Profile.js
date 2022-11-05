@@ -74,7 +74,6 @@ const Profile = () => {
 
           <div className="w-1/4 h-full border-2 border-slate-600 shadow-lg shadow-cyan-500/50 ">
             <div className="mx-auto h-4/6">
-              Profile Picture
               <img src="https://imgv3.fotor.com/images/blog-cover-image/10-profile-picture-ideas-to-make-you-stand-out.jpg" alt="Logo" />
             </div>
             <div className="mx-auto mt-5 w-fit h-1/6 text-slate-100">
@@ -89,14 +88,14 @@ const Profile = () => {
             <div className="flex h-full">
 
               <div className="w-1/2 border-slate-600 border">
-                <div className="mx-auto text-slate-100 w-fit mt-10 align-text-bottom text-center">Detail 1: Value 1</div>
+                <div className="mx-auto text-slate-100 w-fit mt-2 align-text-bottom text-center">Detail 1: Value 1</div>
                 <div className="mx-auto text-slate-100 w-fit mt-2 align-text-bottom text-center">Detail 2: Value 2</div>
                 <div className="mx-auto text-slate-100 w-fit mt-2 align-text-bottom text-center">Detail 3: Value 3</div>
                 <div className="mx-auto text-slate-100 w-fit mt-2 align-text-bottom text-center">Detail 4: Value 4</div>
               </div>
 
               <div className="w-1/2 h-full border-slate-600 border">
-                <div className="mx-auto text-slate-100 w-fit mt-10 align-text-bottom text-center">Detail 5: Value 5</div>
+                <div className="mx-auto text-slate-100 w-fit mt-2 align-text-bottom text-center">Detail 5: Value 5</div>
                 <div className="mx-auto text-slate-100 w-fit mt-2 align-text-bottom text-center">Detail 6: Value 6</div>
                 <div className="mx-auto text-slate-100 w-fit mt-2 align-text-bottom text-center">Detail 7: Value 7</div>
                 <div className="mx-auto text-slate-100 w-fit mt-2 align-text-bottom text-center">Detail 8: Value 8</div>
@@ -130,7 +129,7 @@ const Profile = () => {
 
               </div>
             </div>
-            <div className="mx-auto w-full h-3/6 text-slate-100 mt-10 border border-emerald-600 overflow-scroll p-2 shadow-md hover:shadow-lg shadow-blue-500/50"> 
+            <div className="mx-auto w-full h-3/6 text-slate-100 mt-10 border border-emerald-600 overflow-scroll p-2 shadow-md hover:shadow-lg shadow-blue-500/50">
               <div className="font-bold text-xl text-yellow-400">Saved Stories</div>
 
               {article_titles.map((article, index) => (
