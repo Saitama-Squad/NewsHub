@@ -5,8 +5,10 @@
 html {
   min-height: 100vh;
   background: url("./assets/bgimg.jpeg");
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position:center;
+  
 }
 
 body {
