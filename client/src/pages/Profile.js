@@ -1,4 +1,7 @@
 import React from "react";
+import Link from '@mui/material/Link';
+import LaunchIcon from '@mui/icons-material/Launch';
+import ClearIcon from '@mui/icons-material/Clear';
 
 const article_titles = [
   {
@@ -30,6 +33,22 @@ const article_titles = [
   },
   {
     title: "Delhi Under Smog Blanket As Air Quality Remains"
+  }
+]
+
+const available_topics = [
+  "technology", "government", "politics", "education", "health", "environment", "economy and business", "fashion", "entertainment", "sport"
+]
+
+const picked_topics = [
+  {
+    topic: "technology"
+  },
+  {
+    topic: "government"
+  },
+  {
+    topic: "politics"
   }
 ]
 
@@ -77,12 +96,31 @@ const Profile = () => {
           </div>
 
           <div className="w-2/4 h-full ml-10">
-            <div className="mx-auto h-2/6 text-slate-100 w-full align-text-bottom border border-emerald-600 text-center">Interested Topics</div>
+
+            <div className="mx-auto h-2/6 text-slate-100 w-full align-text-bottom border border-emerald-600 overflow-scroll">
+              <input type="text" placeholder="Search.." className="m-1 p-1" />
+
+              <div>
+                {picked_topics.map((topic, index) => (
+                  <div className="text-left ml-10 w-1/5 p-1 bg-purple-500 mt-2 ">
+                    {index + 1}. {topic.topic}
+                    <ClearIcon onClick={() => { console.log("closed") }} />
+                  </div>
+                ))}
+
+              </div>
+            </div>
             <div className="mx-auto w-full h-3/6 text-slate-100 mt-10 border border-emerald-600 overflow-scroll"> Saved Stories
 
               {article_titles.map((article, index) => (
-                <div className="text-left ml-10 w-4/5 p-2 bg-purple-900 mt-2 rounded-xl"> {index + 1}. {article.title}</div>
+                <div className="text-left ml-10 w-4/5 p-2 bg-purple-900 mt-2 rounded-xl">
+                  {index + 1}. {article.title}
+                  <Link href="www.google.com" color="primary">
+                    <LaunchIcon />
+                  </Link>
+                </div>
               ))}
+
 
             </div>
           </div>
