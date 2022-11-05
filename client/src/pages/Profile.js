@@ -70,7 +70,7 @@ const Profile = () => {
     <>
       <div className="h-screen">
 
-        <div className="flex mt-10 h-1/3 justify-center ">
+        <div className="flex pt-10 h-1/3 justify-center ">
 
           <div className="w-1/4 h-full border-2 border-slate-600 shadow-lg shadow-cyan-500/50 ">
             <div className="mx-auto h-4/6">
