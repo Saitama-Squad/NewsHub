@@ -51,10 +51,10 @@ const Login = () => {
               />
               <div className="flex items-center justify-between">
                 <Link
-                  to="/forgotpassword"
+                  to="/signup"
                   className="text-gray-600"
                 >
-                  Forget Password?
+                  New User? Signup
                 </Link>
                 <button className="bg-gray-800 text-gray-200  px-2 py-1 rounded">
                   Log In

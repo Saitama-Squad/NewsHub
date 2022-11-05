@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 html {
+  font-family: 'Montserrat', sans-serif;
   min-height: 100vh;
   background: url("./assets/bgimg.jpeg") !important;
   background-repeat:no-repeat;
