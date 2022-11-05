@@ -6,7 +6,7 @@ import json
 
 app = Flask(__name__)
 NEWS_API_TOPHEADLINES_ENDPOINT = 'https://newsapi.org/v2/top-headlines'
-NEWS_API_KEY = os.getenv('NEWSAPIKEY')
+NEWS_API_KEY = 'aeb9762b06d74d1a8ece0f3b896feb4c'
 userPreferences = ['business','entertainment','general','health','science','sports','technology']
 
 @app.route('/get-top-headlines', methods=['GET'])
@@ -18,4 +18,9 @@ def getTopHeadlinesNewsArticlesForUser():
   userPrefs = 'category=' + '&category='.join([userPreferences[random.randint(0, 6)] for i in range(2)])
   url = NEWS_API_TOPHEADLINES_ENDPOINT+f'?country=in&{userPrefs}&apiKey={NEWS_API_KEY}'
   apiResponse = requests.get(url=url)
-  return Response(apiResponse.content.decode(), status=200)
+  j = json.loads(apiResponse.content.decode())
+  print(type(j))
+  return j, 200
+
+if __name__ == '__main__':
+  app.run(debug=True)
