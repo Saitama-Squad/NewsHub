@@ -70,9 +70,9 @@ const Profile = () => {
     <>
       <div className="h-screen">
 
-        <div className="flex mt-10 h-1/3 justify-center">
+        <div className="flex mt-10 h-1/3 justify-center ">
 
-          <div className="w-1/4 h-full border-2 border-slate-600">
+          <div className="w-1/4 h-full border-2 border-slate-600 shadow-lg shadow-cyan-500/50 ">
             <div className="mx-auto h-4/6">
               Profile Picture
               <img src="https://imgv3.fotor.com/images/blog-cover-image/10-profile-picture-ideas-to-make-you-stand-out.jpg" alt="Logo" />
@@ -84,18 +84,18 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="w-2/4 bg-red-700 mx-9 h-5/6">
+          <div className="w-2/4 mx-9 h-5/6 shadow-lg shadow-cyan-500/50">
 
             <div className="flex h-full">
 
-              <div className="w-1/2 border-white border">
+              <div className="w-1/2 border-slate-600 border">
                 <div className="mx-auto text-slate-100 w-fit mt-10 align-text-bottom text-center">Detail 1: Value 1</div>
                 <div className="mx-auto text-slate-100 w-fit mt-2 align-text-bottom text-center">Detail 2: Value 2</div>
                 <div className="mx-auto text-slate-100 w-fit mt-2 align-text-bottom text-center">Detail 3: Value 3</div>
                 <div className="mx-auto text-slate-100 w-fit mt-2 align-text-bottom text-center">Detail 4: Value 4</div>
               </div>
 
-              <div className="w-1/2 h-full border-white border">
+              <div className="w-1/2 h-full border-slate-600 border">
                 <div className="mx-auto text-slate-100 w-fit mt-10 align-text-bottom text-center">Detail 5: Value 5</div>
                 <div className="mx-auto text-slate-100 w-fit mt-2 align-text-bottom text-center">Detail 6: Value 6</div>
                 <div className="mx-auto text-slate-100 w-fit mt-2 align-text-bottom text-center">Detail 7: Value 7</div>
@@ -110,14 +110,13 @@ const Profile = () => {
 
         <div className="flex mt-10 h-3/5 justify-center">
 
-          <div className="w-1/4 h-full ml-10 border-2 border-slate-600">
+          <div className="w-1/4 h-full ml-10 border-2 border-slate-600 shadow-lg shadow-cyan-500/50">
             <div className="mx-auto h-4/6 text-red-500 w-fit mt-10 align-text-bottom text-center"> Statistics </div>
           </div>
 
           <div className="w-2/4 h-full ml-10">
 
-            <div className="mx-auto h-2/6 text-slate-100 w-full align-text-bottom border border-emerald-600 overflow-scroll">
-              {/* <input type="text" placeholder="Search.." className="m-1 p-1" /> */}
+            <div className="mx-auto h-2/6 text-slate-100 w-full align-text-bottom border border-emerald-600 overflow-scroll p-2 shadow-lg shadow-blue-500/50">
 
               <div className="bg-blue-800 w-fit p-2 rounded-md m-2 text-center" onClick={() => { console.log("adding more tags") }}>Add More Categories</div>
 
@@ -131,12 +130,13 @@ const Profile = () => {
 
               </div>
             </div>
-            <div className="mx-auto w-full h-3/6 text-slate-100 mt-10 border border-emerald-600 overflow-scroll"> Saved Stories
+            <div className="mx-auto w-full h-3/6 text-slate-100 mt-10 border border-emerald-600 overflow-scroll p-2 shadow-md hover:shadow-lg shadow-blue-500/50"> 
+              <div className="font-bold text-xl text-yellow-400">Saved Stories</div>
 
               {article_titles.map((article, index) => (
                 <div className="text-left ml-10 w-4/5 p-2 bg-purple-900 mt-2 rounded-xl">
                   {index + 1}. {article.title}
-                  <Link href="www.google.com" color="primary">
+                  <Link href="www.google.com" target="blank" color="primary">
                     <LaunchIcon />
                   </Link>
                 </div>
