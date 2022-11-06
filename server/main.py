@@ -3,10 +3,13 @@ import requests
 import os
 import random
 import json
-
+from flask_cors import CORS
+import db_crud
 app = Flask(__name__)
+CORS(app)
+
 NEWS_API_TOPHEADLINES_ENDPOINT = 'https://newsapi.org/v2/top-headlines'
-NEWS_API_KEY = 'aeb9762b06d74d1a8ece0f3b896feb4c'
+NEWS_API_KEY = os.getenv('NEWSAPIKEY')
 userPreferences = ['business','entertainment','general','health','science','sports','technology']
 
 @app.route('/get-top-headlines', methods=['GET'])
@@ -21,6 +24,13 @@ def getTopHeadlinesNewsArticlesForUser():
   j = json.loads(apiResponse.content.decode())
   print(type(j))
   return j, 200
+
+@app.route('/authenticate', methods=['POST'])
+def authenticate_user():
+  form = json.loads(request.data.decode())
+  if db_crud.authenticate(form['email'], form['password']):
+    return {'status':'success'}, 200
+  return {'status':'failure'}, 400
 
 if __name__ == '__main__':
   app.run(debug=True)

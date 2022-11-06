@@ -1,4 +1,5 @@
 import ibm_db
+import os
 dsn_hostname = "0c77d6f2-5da9-48a9-81f8-86b520b87518.bs2io90l08kqb1od8lcg.databases.appdomain.cloud"
 dsn_uid = "bsj69971"        # e.g. "abc12345"
 dsn_pwd = "J0ww1ELveoQeDVWK"      # e.g. "7dBZ3wWt9XN6$o0J"
@@ -21,8 +22,6 @@ dsn = (
 
 
 conn = ibm_db.pconnect(dsn, "", "")
-print ("Connected to database: ", dsn_database, "as user: ", dsn_uid, "on host: ", dsn_hostname)
-
 
 def authenticate(username, password):
     stmt = ibm_db.exec_immediate(conn, "SELECT * FROM USERS")
@@ -33,6 +32,14 @@ def authenticate(username, password):
         if(row['USERNAME'] == username and row['PASSWORD'] == password):
             return True
     return False
+
+def create_account(username, password, topics):
+    sql = "INSERT INTO USERS VALUES(?,?,?)"
+    stmt = ibm_db.prepare(conn, sql)
+    ibm_db.bind_param(stmt, 1, username)
+    ibm_db.bind_param(stmt, 2, password)
+    ibm_db.bind_param(stmt, 3, ','.join(topics))
+    ibm_db.execute(stmt)
 
 def get_likes(user):
     stmt = ibm_db.exec_immediate(conn, "SELECT * FROM NEWS where user='{0}' and news_type='S'".format(user))
