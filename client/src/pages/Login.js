@@ -9,11 +9,23 @@ const Login = () => {
 
   const loginHandler = (e) =>{
     e.preventDefault();
-    const payload = {
+    console.log(JSON.stringify({
       email: email,
       password: password
-    }
-    console.log(payload);
+    }))
+    fetch('http://localhost:5000/authenticate',{
+      method: 'POST',
+      mode: 'cors',
+      redirect: 'manual',
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
+    }).then((res)=>{
+      if(res.status===200) window.location.replace("/news");
+      else setLoginError(true)
+    })
+    
     if(loginError){
       setLoginError(true);
     }
