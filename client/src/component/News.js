@@ -18,7 +18,7 @@ const News = (props) => {
 
   return (
     <div className="mt-20">
-      <a href={props.new.article}>
+      <a href={props.new.url}>
         <Card sx={{ minWidth: 200, maxWidth: 1000 }}>
           <CardHeader
             action={
@@ -27,13 +27,13 @@ const News = (props) => {
               </IconButton>
             }
             title={props.new.title}
-            subheader={props.new.date}
+            subheader={props.new.publishedAt}
           />
           <CardMedia
             component="img"
             height="50"
             style={{ margin: "auto", height: "500px", width: "500px" }}
-            src={props.new.image}
+            src={props.new.urlToImage}
             alt="Paella dish"
           />
           <CardContent>
@@ -55,7 +55,7 @@ const News = (props) => {
                 <FavoriteIcon />
               </IconButton>
             }
-            <a href={`https://api.WhatsApp.com/send?text=` + props.new.article}>
+            <a href={`https://api.WhatsApp.com/send?text=` + props.new.url}>
               <IconButton aria-label="share">
                 <ShareIcon />
               </IconButton>
