@@ -34,12 +34,16 @@ def authenticate(username, password):
     return False
 
 def create_account(username, password, topics):
-    sql = "INSERT INTO USERS VALUES(?,?,?)"
-    stmt = ibm_db.prepare(conn, sql)
-    ibm_db.bind_param(stmt, 1, username)
-    ibm_db.bind_param(stmt, 2, password)
-    ibm_db.bind_param(stmt, 3, ','.join(topics))
-    ibm_db.execute(stmt)
+    try:
+        sql = "INSERT INTO USERS VALUES(?,?,?)"
+        stmt = ibm_db.prepare(conn, sql)
+        ibm_db.bind_param(stmt, 1, username)
+        ibm_db.bind_param(stmt, 2, password)
+        ibm_db.bind_param(stmt, 3, ','.join(topics))
+        ibm_db.execute(stmt)
+        return True
+    except:
+        return False
 
 def get_likes(user):
     stmt = ibm_db.exec_immediate(conn, "SELECT * FROM NEWS where user='{0}' and news_type='S'".format(user))
