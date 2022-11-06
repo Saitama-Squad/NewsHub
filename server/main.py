@@ -32,5 +32,13 @@ def authenticate_user():
     return {'status':'success'}, 200
   return {'status':'failure'}, 400
 
+@app.route('/sign-up', methods=['POST'])
+def sign_up_user():
+  form = json.loads(request.data.decode())
+  print(form)
+  if db_crud.create_account(form['email'], form['password'], [x['name'] for x in form['options']]):
+    return {'status':'success'}, 200
+  return {'status':'failure'}, 400
+
 if __name__ == '__main__':
   app.run(debug=True)

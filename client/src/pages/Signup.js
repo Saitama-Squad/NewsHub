@@ -9,16 +9,36 @@ const Signup = () => {
   const [confirm_password, setConfirmPassword] = useState();
   const [dob, setDob] = useState();
   const [options, setOptions] = useState([{ name: 'business', id: 1 }, { name: 'entertainment', id: 2 }, { name: 'general', id: 3 }, { name: 'health', id: 4 }, { name: 'science', id: 5 }, { name: 'sports', id: 6 }, { name: 'business', id: 7 }, { name: 'technology', id: 8 }, { name: 'Virat Kohli', id: 9 }, { name: 'Narendra Modi', id: 10 }, { name: 'Rain', id: 13 }, { name: 'MK Stalin', id: 12 }, { name: 'Cinema', id: 13 }, { name: 'Floods', id: 14 }, { name: 'politics', id: 15 }, { name: 'Donald Trump', id: 16 }, { name: 'Putin', id: 17 }, { name: 'Ukraine-Russia', id: 18 }, { name: 'Biden', id: 19 }, { name: 'ADMK', id: 20 }, { name: 'Rahul Gandhi', id: 21 }, { name: 'China', id: 22 }, { name: 'corona', id: 23 }, { name: 'elon musk', id: 24 }, { name: 'worldcup', id: 25 }, { name: 'BJP', id: 26 }, { name: 'Taiwan China crisis', id: 27 }, { name: 'job opputunities', id: 28 }, { name: 'tourism', id: 29 }, { name: 'metroplian', id: 30 }]);
-  const [selectedVal, setSelectedVal] = useState();
+  const [selectedVal, setSelectedVal] = useState([]);
 
-  const signupHandler = (e) =>{
+  const signupHandler = (e) => {
     e.preventDefault();
+    const payload = {
+      email: email,
+      password: password,
+      options: selectedVal
+    }
+    console.log(payload)
+    fetch('http://localhost:5000/sign-up', {
+      method: 'POST',
+      mode: 'cors',
+      redirect: 'manual',
+      body: JSON.stringify(payload)
+    }).then((res) => {
+      if (res.status === 200) window.location.replace("/");
+    })
   }
   const onSelect = (selectedList, selectedItem) => {
+    selectedVal.push(selectedItem)
   }
 
   const onRemove = (selectedList, removedItem) => {
+    const index = selectedVal.indexOf(removedItem);
+    if (index > -1) { // only splice array when item is found
+      selectedVal.splice(index, 1); // 2nd parameter means remove one item only
+    }
   }
+
   return (
     <>
       <div className="min-h-screen flex flex-col">
