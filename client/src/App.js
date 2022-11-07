@@ -10,10 +10,6 @@ const App = () => {
     <>
       {sessionStorage.getItem('@user') ?
         <>
-          <button className="bg-red-500" onClick={() => {
-            sessionStorage.removeItem('@user');
-            window.location.reload();
-          }}>Logout</button>
           <Router history={history}>
             <Route path="/profile" exact component={Profile} />
             <Route path="/" exact component={NewsFeed} />

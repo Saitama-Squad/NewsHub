@@ -8,7 +8,7 @@ const NewsFeed = () => {
 
   React.useEffect(() => {
     const fn = () => {
-      axios.get("http://localhost:5000/get-top-headlines?userName="+sessionStorage.getItem('@user')).then((data, error) => {
+      axios.get("http://169.51.205.76:32522/get-top-headlines?userName="+sessionStorage.getItem('@user')).then((data, error) => {
         console.log(data.data.articles);
         setArticles(data.data.articles);
         setFetch(true);
@@ -16,7 +16,7 @@ const NewsFeed = () => {
     }
     fn();
   }, [])
-  
+
   return (
     <div className='w-full flex'>
       <div className='m-auto justify-center p-20 rounded-lg'>

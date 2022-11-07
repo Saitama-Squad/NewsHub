@@ -22,7 +22,7 @@ const Signup = () => {
         phone: phone,
         dob: dob
       }
-      fetch('http://localhost:5000/sign-up', {
+      fetch('http://169.51.205.76:32522/sign-up', {
         method: 'POST',
         mode: 'cors',
         redirect: 'manual',

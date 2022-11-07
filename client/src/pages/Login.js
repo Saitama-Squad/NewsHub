@@ -9,11 +9,7 @@ const Login = () => {
 
   const loginHandler = (e) => {
     e.preventDefault();
-    console.log(JSON.stringify({
-      email: email,
-      password: password
-    }))
-    fetch('http://localhost:5000/authenticate', {
+    fetch('http://169.51.205.76:32522/authenticate', {
       method: 'POST',
       mode: 'cors',
       redirect: 'manual',

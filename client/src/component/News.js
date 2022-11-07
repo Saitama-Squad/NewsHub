@@ -9,12 +9,14 @@ import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-
+import dateFormat from "dateformat";
+import axios from 'axios';
 
 const News = (props) => {
   const hello = "hello"
   const [liked, setLiked] = useState(false)
   const [bookmark, setBookMark] = useState(false);
+  const dateOfNew = new Date(props.new.publishedAt);
 
   return (
     <div className="mt-20">
@@ -23,7 +25,7 @@ const News = (props) => {
         <a href={props.new.url}>
           <CardHeader
             title={props.new.title}
-            subheader={props.new.publishedAt}
+            subheader={dateFormat(dateOfNew)}
           />
           </a>
           {props.new.urlToImage ?
