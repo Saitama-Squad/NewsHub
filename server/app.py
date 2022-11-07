@@ -58,12 +58,21 @@ def user_profile():
 
 @app.route('/api/action', methods=["POST"])
 def action():
-  form = json.loads(request.data.decode())
+  form = request.data.decode()
+  form = json.loads(form)
+  print(form)
   if(form['type']=='A'):
-    db_crud.add_action(form['email'], form['title'], form['url'], form['urlToImage'], form['publishedAt'], form['description'], form['action'])
+    print("ADD")
+    if db_crud.add_action(form['email'], form['title'], form['url'], form['urlToImage'], form['publishedAt'], form['description'], form['action']):
+      return {'status':'success'}, 200
+    else:
+      return {'status':'failure'}, 400
   if(form['type']=='R'):
-    db_crud.remove_action(form['email'], form['url'])
-  return {'status':'success'}, 200
+    print("REMOVE")
+    if db_crud.remove_action(form['email'], form['url']):
+      return {'status':'success'}, 200
+    else:
+      return {'status':'failure'}, 400
 
 @app.route('/api/update-profile', methods=['POST'])
 def updateprofile():

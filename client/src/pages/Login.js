@@ -9,7 +9,7 @@ const Login = () => {
 
   const loginHandler = (e) => {
     e.preventDefault();
-    fetch('http://169.51.205.76:32522/authenticate', {
+    fetch('http://169.51.205.76:32522/api/authenticate', {
       method: 'POST',
       mode: 'cors',
       redirect: 'manual',

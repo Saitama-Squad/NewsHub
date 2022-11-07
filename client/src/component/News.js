@@ -70,7 +70,8 @@ const News = (props) => {
                   type: 'A'
                 }
                 console.log(payload);
-                await axios.post('http://169.51.205.76:32522/action',payload);
+                //169.51.205.76:32522
+                await axios.post('http://169.51.205.76:32522/api/action',payload);
               }} aria-label="add to favorites">
                 <FavoriteIcon />
               </IconButton>

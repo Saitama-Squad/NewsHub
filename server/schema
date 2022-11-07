@@ -12,7 +12,7 @@ user varchar(255),
 news_title varchar(255),
 news_article_link varchar(1024),
 news_image_link varchar(1024),
-news_date varchar(10),
+news_date varchar(255),
 news_description varchar(255),
 news_type varchar(1) check (news_type in ('B','L')) ,
 foreign key(user) references USERS(username)

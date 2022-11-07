@@ -96,7 +96,7 @@ def update_topics(user, topics):
 
 def add_action(user, title, url, image_url, date, desc, action):
     try:
-        sql = "INSERT INTO NEWS VALUES(?,?,?,?,?,?)"
+        sql = "INSERT INTO NEWS VALUES(?,?,?,?,?,?,?)"
         stmt = ibm_db.prepare(conn, sql)
         ibm_db.bind_param(stmt, 1, user)
         ibm_db.bind_param(stmt, 2, title)
@@ -107,7 +107,8 @@ def add_action(user, title, url, image_url, date, desc, action):
         ibm_db.bind_param(stmt, 7, action)
         ibm_db.execute(stmt)
         return True
-    except:
+    except Exception as e:
+        print(e)
         return False
 
 def remove_action(user, url):
