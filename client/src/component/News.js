@@ -52,13 +52,25 @@ const News = (props) => {
           <CardActions disableSpacing>
             {liked ?
               <IconButton style={{ color: 'red' }} onClick={() => {
-                setLiked(false)
+                setLiked(false);
               }} aria-label="add to favorites">
                 <FavoriteIcon />
               </IconButton>
               :
-              <IconButton style={{ color: 'gray' }} onClick={() => {
-                setLiked(true)
+              <IconButton style={{ color: 'gray' }} onClick={async() => {
+                setLiked(true);
+                const payload = {
+                  email: sessionStorage.getItem('@user'),
+                  title: props.new.title,
+                  url: props.new.url,
+                  urlToImage: props.new.urlToImage,
+                  publishedAt: props.new.publishedAt,
+                  description: props.new.description,
+                  action: 'L',
+                  type: 'A'
+                }
+                console.log(payload);
+                await axios.post('http://169.51.205.76:32522/action',payload);
               }} aria-label="add to favorites">
                 <FavoriteIcon />
               </IconButton>

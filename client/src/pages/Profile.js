@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import { Carousel } from 'react-responsive-carousel';
 
 const Profile = () => {
   const [fetched, setFetched] = useState(false);
+  const [data, setData] = useState();
   useEffect(() => {
     const fn = async () => {
-      const profileData = await axios.get("http://169.51.205.76:32522/profile?userName=" + localStorage.getItem('@user'));
+      const profileData = await axios.get("http://169.51.205.76:32522/profile?userName=" + sessionStorage.getItem('@user'));
       console.log(profileData);
+      setData(profileData.data);
       setFetched(true);
     }
     fn();
@@ -23,8 +25,8 @@ const Profile = () => {
                 <div className="px-6">
                   <div className="flex flex-wrap justify-center">
                     <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
-                      <div className="relative">
-                        <img alt="..." src="https://demos.creative-tim.com/notus-js/assets/img/team-2-800x800.jpg" className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px" />
+                      <div>
+                        <img width={180} height={180} alt="..." src="https://64.media.tumblr.com/bed5455fdd7789656247fb01ed60ad31/93c34c0b6d121aef-6a/s400x600/15a48a245b0ef5bb4f5215d177116cf9c4150531.png" className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px" />
                       </div>
                     </div>
                     <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
@@ -50,31 +52,28 @@ const Profile = () => {
                   </div>
                   <div className="text-center mt-12">
                     <h3 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
-                      Jenna Stones
+                      {data?.user.NAME}
                     </h3>
                     <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
                       <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
-                      Los Angeles, California
-                    </div>
-                    <div className="mb-2 text-blueGray-600 mt-10">
-                      <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>Solution Manager - Creative Tim Officer
+                      Date of Birth : {data?.user.DOB}
                     </div>
                     <div className="mb-2 text-blueGray-600">
-                      <i className="fas fa-university mr-2 text-lg text-blueGray-400"></i>University of Computer Science
+                      <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i> Email : {data?.user.USERNAME}
+                    </div>
+                    <div className="mb-2 text-blueGray-600">
+                      <i className="fas fa-university mr-2 text-lg text-blueGray-400"></i>Password : {'*'.repeat(data?.user.PASSWORD?.length)}
+                    </div>
+                    <div className="mb-2 text-blueGray-600">
+                      <i className="fas fa-university mr-2 text-lg text-blueGray-400"></i>Topics: {data?.user.TOPICS}
                     </div>
                   </div>
                   <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
                     <div className="flex flex-wrap justify-center">
-                      <div className="w-full lg:w-9/12 px-4">
-                        <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
-                          An artist of considerable range, Jenna the name taken by
-                          Melbourne-raised, Brooklyn-based Nick Murphy writes,
-                          performs and records all of his own music, giving it a
-                          warm, intimate feel with a solid groove structure. An
-                          artist of considerable range.
-                        </p>
-                        <a href="#pablo" className="font-normal text-pink-500">Show more</a>
-                      </div>
+                      <h1>Articles Liked</h1>
+                      <Carousel>
+                      
+                      </Carousel>
                     </div>
                   </div>
                 </div>
