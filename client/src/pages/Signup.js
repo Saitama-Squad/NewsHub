@@ -13,20 +13,24 @@ const Signup = () => {
 
   const signupHandler = (e) => {
     e.preventDefault();
-    const payload = {
-      email: email,
-      password: password,
-      options: selectedVal
+    if (password == confirm_password) {
+      const payload = {
+        email: email,
+        password: password,
+        options: selectedVal,
+        name: name,
+        phone: phone,
+        dob: dob
+      }
+      fetch('http://169.51.205.76:32522/sign-up', {
+        method: 'POST',
+        mode: 'cors',
+        redirect: 'manual',
+        body: JSON.stringify(payload)
+      }).then((res) => {
+        if (res.status === 200) window.location.replace("/");
+      })
     }
-    console.log(payload)
-    fetch('http://169.51.205.76:32522/sign-up', {
-      method: 'POST',
-      mode: 'cors',
-      redirect: 'manual',
-      body: JSON.stringify(payload)
-    }).then((res) => {
-      if (res.status === 200) window.location.replace("/");
-    })
   }
   const onSelect = (selectedList, selectedItem) => {
     selectedVal.push(selectedItem)
@@ -130,7 +134,7 @@ const Signup = () => {
 
           <div className="text-grey-dark mt-6">
             Already have an account?
-            <Link to="/login" className="no-underline border-b border-blue text-blue" href="../login/">
+            <Link to="/" className="no-underline border-b border-blue text-blue" href="../login/">
               Log in
             </Link>.
           </div>
