@@ -1,29 +1,33 @@
 import * as React from 'react';
 import News from '../component/News';
-
+import axios from "axios";
 
 const NewsFeed = () => {
   const [articles, setArticles] = React.useState([])
-  async function get_news(user) {
-    const res = await fetch("http://localhost:5000/get-top-headlines?userName=lokesh")
-    const data = await res.json()
-    console.log(data.articles)
-    setArticles(data.articles)
-  }
-  React.useEffect(async ()=>{await get_news('lokesh')},[])
-  function render(){
-    articles.map((item,index)=>{
-      return(
-      <News new={item} />
-    )
-  })
-  }
+  const [fetch, setFetch] = React.useState(false);
+
+  React.useEffect(() => {
+    const fn = () => {
+      axios.get("http://169.51.205.76:32522/get-top-headlines?userName=lokesh").then((data, error) => {
+        console.log(data.data.articles);
+        setArticles(data.data.articles);
+        setFetch(true);
+      })
+    }
+    fn();
+  }, [])
+  
   return (
     <div className='w-full flex'>
       <div className='m-auto justify-center p-20 rounded-lg'>
-        { 
-        render()
-        }
+        {fetch ?
+          <>
+            {articles.map((item, index) =>
+              <News new={item} key={index} />
+            )
+            }
+          </>
+          : null}
       </div>
     </div>
   );
