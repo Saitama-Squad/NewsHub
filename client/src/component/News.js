@@ -29,13 +29,22 @@ const News = (props) => {
             title={props.new.title}
             subheader={props.new.publishedAt}
           />
-          <CardMedia
-            component="img"
-            height="50"
-            style={{ margin: "auto", height: "500px", width: "500px" }}
-            src={props.new.urlToImage}
-            alt="Paella dish"
-          />
+          {props.new.urlToImage ?
+            <CardMedia
+              component="img"
+              height="50"
+              style={{ margin: "auto", height: "500px", width: "500px" }}
+              src={props.new.urlToImage}
+              alt="Paella dish"
+            /> :
+            <CardMedia
+              component="img"
+              height="50"
+              style={{ margin: "auto", height: "500px", width: "500px" }}
+              src="https://thumbs.dreamstime.com/b/news-newspapers-folded-stacked-word-wooden-block-puzzle-dice-concept-newspaper-media-press-release-42301371.jpg"
+              alt="Paella dish"
+            />
+          }
           <CardContent>
             <Typography variant="body2" color="text.secondary">
               {props.new.description}
