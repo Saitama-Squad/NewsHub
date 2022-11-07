@@ -62,11 +62,13 @@ def action():
     db_crud.add_action(form['email'], form['title'], form['url'], form['urlToImage'], form['publishedAt'], form['description'], form['action'])
   if(form['type']=='R'):
     db_crud.remove_action(form['email'], form['url'])
+  return {'status':'success'}, 200
 
-@app.route('/update-profile', method=['POST'])
-def update_topics():
+@app.route('/update-profile', methods=['POST'])
+def updateprofile():
   form = json.loads(request.data.decode())
   db_crud.update_topics(form['user'], form['topics'])
+  return {'status':'success'}, 200
 
 if __name__ == '__main__':
   app.run(debug=True)
