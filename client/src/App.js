@@ -6,14 +6,25 @@ import NewsFeed from "./pages/NewsFeed";
 import Signup from "./pages/Signup";
 
 const App = () => {
-  
   return (
-    <Router history={history}>
-      <Route path="/" exact component={Login} />
-      <Route path="/signup" exact component={Signup} />
-      <Route path="/profile" exact component={Profile}/>
-      <Route path="/news" exact component={NewsFeed} />
-    </Router>
+    <>
+      {sessionStorage.getItem('@user') ?
+        <>
+          <button className="bg-red-500" onClick={() => {
+            sessionStorage.removeItem('@user');
+            window.location.reload();
+          }}>Logout</button>
+          <Router history={history}>
+            <Route path="/profile" exact component={Profile} />
+            <Route path="/" exact component={NewsFeed} />
+          </Router>
+        </> :
+        <Router history={history}>
+          <Route path="/" exact component={Login} />
+          <Route path="/signup" exact component={Signup} />
+        </Router>
+      }
+    </>
   );
 }
 

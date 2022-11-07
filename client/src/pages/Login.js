@@ -1,19 +1,19 @@
-import React,{useState} from 'react';
-import {Link} from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
 
-  const [email,setEmail] = useState();
-  const [password,setPassword] = useState();
-  const [loginError,setLoginError] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [loginError, setLoginError] = useState();
 
-  const loginHandler = (e) =>{
+  const loginHandler = (e) => {
     e.preventDefault();
     console.log(JSON.stringify({
       email: email,
       password: password
     }))
-    fetch('http://169.51.205.76:32522/authenticate',{
+    fetch('http://169.51.205.76:32522/authenticate', {
       method: 'POST',
       mode: 'cors',
       redirect: 'manual',
@@ -21,12 +21,15 @@ const Login = () => {
         email: email,
         password: password
       })
-    }).then((res)=>{
-      if(res.status===200) window.location.replace("/news");
-      else setLoginError(true)
+    }).then((res) => {
+      if (res.status === 200) {
+        sessionStorage.setItem('@user', email);
+        window.location.reload();
+      }
+      else setLoginError(true);
     })
-    
-    if(loginError){
+
+    if (loginError) {
       setLoginError(true);
     }
   }
@@ -93,7 +96,7 @@ const Login = () => {
             Welcome to NewsHub
           </h1>
           <h1 className="text-5xl py-2 font-bold text-white tracking-wide">
-            
+
           </h1>
           <p className="text-white py-2">
             Provide you with the news you want. <br /> Save Time. Say yes to NewsHub.
