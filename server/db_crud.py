@@ -33,13 +33,16 @@ def authenticate(username, password):
             return True
     return False
 
-def create_account(username, password, topics):
+def create_account(name, username, password, phone, dob, topics):
     try:
-        sql = "INSERT INTO USERS VALUES(?,?,?)"
+        sql = "INSERT INTO USERS VALUES(?,?,?,?,?,?)"
         stmt = ibm_db.prepare(conn, sql)
-        ibm_db.bind_param(stmt, 1, username)
-        ibm_db.bind_param(stmt, 2, password)
-        ibm_db.bind_param(stmt, 3, ','.join(topics))
+        ibm_db.bind_param(stmt, 1, name)
+        ibm_db.bind_param(stmt, 2, username)
+        ibm_db.bind_param(stmt, 3, password)
+        ibm_db.bind_param(stmt, 4, phone)
+        ibm_db.bind_param(stmt, 5, dob)
+        ibm_db.bind_param(stmt, 6, ','.join(topics))
         ibm_db.execute(stmt)
         return True
     except:
@@ -81,10 +84,25 @@ def update_topics(user, topics):
     ibm_db.bind_param(stmt, 2, user)
     ibm_db.execute(stmt)
 
+def add_action(user, title, url, image_url, date, desc, action):
+    try:
+        sql = "INSERT INTO NEWS VALUES(?,?,?,?,?,?)"
+        stmt = ibm_db.prepare(conn, sql)
+        ibm_db.bind_param(stmt, 1, user)
+        ibm_db.bind_param(stmt, 2, title)
+        ibm_db.bind_param(stmt, 3, url)
+        ibm_db.bind_param(stmt, 4, image_url)
+        ibm_db.bind_param(stmt, 5, date)
+        ibm_db.bind_param(stmt, 6, desc)
+        ibm_db.bind_param(stmt, 7, action)
+        ibm_db.execute(stmt)
+        return True
+    except:
+        return False
 
-
-
-
-
+def remove_action(user, url):
+    sql = "DELETE FROM NEWS WHERE user={0} AND news_article_link={1}".format(user, url)
+    ibm_db.exec_immediate(conn, sql)
+    
 
 

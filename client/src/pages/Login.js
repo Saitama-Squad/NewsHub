@@ -13,7 +13,7 @@ const Login = () => {
       email: email,
       password: password
     }))
-    fetch('http://169.51.205.76:32522/authenticate', {
+    fetch('http://localhost:5000/authenticate', {
       method: 'POST',
       mode: 'cors',
       redirect: 'manual',

@@ -18,17 +18,14 @@ const News = (props) => {
 
   return (
     <div className="mt-20">
-      <a href={props.new.url}>
+      
         <Card sx={{ minWidth: 200, maxWidth: 1000 }}>
+        <a href={props.new.url}>
           <CardHeader
-            action={
-              <IconButton aria-label="settings">
-                {bookmark ? <BookmarkIcon onClick={() => setBookMark(false)} style={{ color: "green" }} /> : <BookmarkIcon onClick={() => setBookMark(true)} />}
-              </IconButton>
-            }
             title={props.new.title}
             subheader={props.new.publishedAt}
           />
+          </a>
           {props.new.urlToImage ?
             <CardMedia
               component="img"
@@ -64,6 +61,9 @@ const News = (props) => {
                 <FavoriteIcon />
               </IconButton>
             }
+              <IconButton aria-label="settings">
+                {bookmark ? <BookmarkIcon onClick={() => setBookMark(false)} style={{ color: "green" }} /> : <BookmarkIcon onClick={() => setBookMark(true)} />}
+              </IconButton>
             <a href={`https://api.WhatsApp.com/send?text=` + props.new.url}>
               <IconButton aria-label="share">
                 <ShareIcon />
@@ -71,7 +71,6 @@ const News = (props) => {
             </a>
           </CardActions>
         </Card>
-      </a>
     </div>
   );
 }
