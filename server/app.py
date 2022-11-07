@@ -51,7 +51,8 @@ def user_profile():
   ret = {
     "likes" : db_crud.get_likes(query['userName']),
     "bookmarks" : db_crud.get_bookmarks(query['userName']),
-    "topics": db_crud.get_topics(query['userName'])
+    "topics": db_crud.get_topics(query['userName']),
+    "user" : db_crud.get_user(query['userName'])
   }
   return ret, 200
 

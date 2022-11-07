@@ -33,6 +33,16 @@ def authenticate(username, password):
             return True
     return False
 
+def get_user(username):
+    stmt = ibm_db.exec_immediate(conn, "SELECT * FROM USERS")
+    row = True
+    while row!= False:
+        row = ibm_db.fetch_assoc(stmt)
+        if not row: return False
+        if(row['USERNAME'] == username):
+            return dict(row)
+    return dict()
+
 def create_account(name, username, password, phone, dob, topics):
     try:
         sql = "INSERT INTO USERS VALUES(?,?,?,?,?,?)"
