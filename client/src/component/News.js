@@ -71,7 +71,7 @@ const News = (props) => {
                 }
                 console.log(payload);
                 //169.51.205.76:32522
-                await axios.post('http://169.51.205.76:32522/api/action',payload);
+                await axios.post('http://169.51.205.76:32522/action',payload);
               }} aria-label="add to favorites">
                 <FavoriteIcon />
               </IconButton>

@@ -7,14 +7,14 @@ const Profile = () => {
   const [data, setData] = useState();
   useEffect(() => {
     const fn = async () => {
-      const profileData = await axios.get("http://169.51.205.76:32522/api/profile?userName=" + sessionStorage.getItem('@user'));
+      const profileData = await axios.get("http://169.51.205.76:32522/profile?userName=" + sessionStorage.getItem('@user'));
       console.log(profileData);
       setData(profileData.data);
       setFetched(true);
     }
     fn();
   }, [])
-  axios.get("http://169.51.205.76:32522/api/profile?userName=" + localStorage.getItem('@user'))
+  axios.get("http://169.51.205.76:32522/profile?userName=" + localStorage.getItem('@user'))
   return (
     <>
       {fetched ?
