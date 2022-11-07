@@ -20,8 +20,8 @@ def get_top_headlines_for_user():
   country = query.get('country', 'in')
   q = query.get('q', '')
   
-  user_topics = db_crud.get_topics()
-  user_prefs = 'category=' + '&category='.join(user_topics)
+  # user_topics = db_crud.get_topics('lokesh')
+  user_prefs = 'category=' + '&category='.join(['business','general'])
   url = NEWS_API_TOPHEADLINES_ENDPOINT+f'?country={country}&{user_prefs}&apiKey={NEWS_API_KEY}'
   if q != '':
     url += f'&q={q}'
