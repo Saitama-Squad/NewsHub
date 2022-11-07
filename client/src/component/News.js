@@ -53,11 +53,7 @@ const News = (props) => {
               setLiked(false);
               const payload = {
                 email: sessionStorage.getItem('@user'),
-                title: props.new.title ? props.new.title : "",
                 url: props.new.url ? props.new.url : "",
-                urlToImage: props.new.urlToImage ? props.new.urlToImage : "https://thumbs.dreamstime.com/b/news-newspapers-folded-stacked-word-wooden-block-puzzle-dice-concept-newspaper-media-press-release-42301371.jpg",
-                publishedAt: props.new.publishedAt ? props.new.publishedAt : "",
-                description: props.new.description ? props.new.description : "",
                 action: 'S',
                 type: 'R'
               }
@@ -90,11 +86,7 @@ const News = (props) => {
             {bookmark ? <BookmarkIcon onClick={async () => {
               const payload = {
                 email: sessionStorage.getItem('@user'),
-                title: props.new.title ? props.new.title : "",
                 url: props.new.url ? props.new.url : "",
-                urlToImage: props.new.urlToImage ? props.new.urlToImage : "https://thumbs.dreamstime.com/b/news-newspapers-folded-stacked-word-wooden-block-puzzle-dice-concept-newspaper-media-press-release-42301371.jpg",
-                publishedAt: props.new.publishedAt ? props.new.publishedAt : "",
-                description: props.new.description ? props.new.description : "",
                 action: 'B',
                 type: 'R'
               }
