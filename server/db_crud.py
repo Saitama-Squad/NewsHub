@@ -59,7 +59,7 @@ def create_account(name, username, password, phone, dob, topics):
         return False
 
 def get_likes(user):
-    stmt = ibm_db.exec_immediate(conn, "SELECT * FROM NEWS where user='{0}' and news_type='S'".format(user))
+    stmt = ibm_db.exec_immediate(conn, "SELECT * FROM NEWS N where N.user='{0}' and news_type='S'".format(user))
     likes = []
     row = True
     while row!= False:
@@ -69,7 +69,7 @@ def get_likes(user):
     return likes
 
 def get_bookmarks(user):
-    stmt = ibm_db.exec_immediate(conn, "SELECT * FROM NEWS where user='{0}' and news_type='B'".format(user))
+    stmt = ibm_db.exec_immediate(conn, "SELECT * FROM NEWS N where N.user='{0}' and news_type='B'".format(user))
     bookmarks = []
     row = True
     while row!= False:
@@ -112,8 +112,12 @@ def add_action(user, title, url, image_url, date, desc, action):
         return False
 
 def remove_action(user, url):
-    sql = "DELETE FROM NEWS WHERE user={0} AND news_article_link={1}".format(user, url)
-    ibm_db.exec_immediate(conn, sql)
-    
+    try:
+        sql = "DELETE FROM NEWS N WHERE N.user='{0}' AND news_article_link='{1}'".format(user, url)
+        ibm_db.exec_immediate(conn, sql)
+        return True
+    except Exception as e:
+        print(e)
+        return False
 
 
