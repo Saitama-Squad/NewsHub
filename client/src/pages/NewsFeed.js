@@ -6,27 +6,49 @@ import { Link } from 'react-router-dom';
 
 const NewsFeed = () => {
   const [articles, setArticles] = useState([])
-  const [fetch, setFetch] = useState(false);
-  const [likedArticles, setLikedArticles] = useState([]);
-  const [bookedArticles, setBookedArticles] = useState([]);
+  const [fetched, setFetched] = useState(false);
+  const [likedArticles, setLikedArticles] = useState();
+  const [bookedArticles, setBookedArticles] = useState();
+  const [changed, setChanged] = useState(false);
+  // const [found1, setFound1] = useState(0);
+  // const [found2, setFound2] = useState(0);
+  // useEffect(() => {
+  //   setFound1(found1+1);
+  // }, [likedArticles])
+  // useEffect(() => {
+  //   setFound2(found2+1);
+  // }, [bookedArticles])
   useEffect(() => {
     const fn = () => {
       axios.get("http://169.51.205.76:32522/get-top-headlines?userName=" + sessionStorage.getItem('@user')).then((data, error) => {
-        console.log(data.data.articles);
         axios.get("http://169.51.205.76:32522/profile?userName=" + sessionStorage.getItem('@user')).then((profileData, err) => {
           console.log(profileData);
-          const likedLinks = profileData.data?.likes.reduce((prev, cur) => {
-            return prev.concat(cur.NEWS_ARTICLE_LINK);
-          }, [])
-          const bookmarkedLinks = profileData.data?.bookmarks.reduce((prev, cur) => {
-            return prev.concat(cur.NEWS_ARTICLE_LINK);
-          }, [])
-          console.log(likedLinks);
-          console.log(bookmarkedLinks);
-          setLikedArticles(likedLinks);
-          setBookedArticles(bookmarkedLinks);
+          let likedList = [], bookedList = [];
+          for(const article of profileData?.data.likes){
+            var name = article.NEWS_ARTICLE_LINK;
+            var obj = {};
+            obj[name] = true;
+            likedList = {
+              ...likedList,
+              ...obj
+            };
+          }
+          for(const article of profileData?.data.bookmarks){
+            var name = article.NEWS_ARTICLE_LINK;
+            var obj = {};
+            obj[name] = true;
+            bookedList = {
+              ...bookedList,
+              ...obj
+            };
+          }
+          console.log(likedList,bookedList);
+          setLikedArticles(likedList);
+          setBookedArticles(bookedList);
+          setLikedArticles(likedList);
+          setBookedArticles(bookedList);
           setArticles(data.data.articles);
-          setFetch(true);
+          setFetched(true);
         })
       })
     }
@@ -36,15 +58,19 @@ const NewsFeed = () => {
   return (
     <div className='w-full flex'>
       <div className='m-auto justify-center p-20 rounded-lg'>
-      <Link to="/profile"><CgProfile className='text-white text-5xl float-right -mr-40 -mt-16' /></Link>
-        {fetch ?
+        <Link to="/profile"><CgProfile className='text-white text-5xl float-right -mr-3/4 -mt-16' /></Link>
+        {fetched ?
           <>
-            {articles.map((item, index) =>
-              <News new={{
-                ...item,
-                liked: likedArticles?.includes(item.url),
-                bookmark: bookedArticles?.includes(item.url)
-              }} key={index} />
+            {articles.map((item, index) => {
+              //console.log(likedArticles[`${item.url}`], item.url);
+              return (
+                <News new={{
+                  ...item,
+                  liked: likedArticles[`${item.url}`],
+                  bookmark: bookedArticles[`${item.url}`]
+                }} key={index} />
+              )
+            }
             )
             }
           </>

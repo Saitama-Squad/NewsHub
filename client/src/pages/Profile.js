@@ -3,17 +3,21 @@ import axios from "axios";
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import { Carousel } from 'react-responsive-carousel';
 import News from "../component/News";
+import Multiselect from "multiselect-react-dropdown";
 
 const Profile = () => {
   const [fetched, setFetched] = useState(false);
   const [data, setData] = useState();
   const [likedArticles, setLikedArticles] = useState([]);
   const [bookedArticles, setBookedArticles] = useState([]);
+  const [options, setOptions] = useState([{ name: 'business', id: 1 }, { name: 'entertainment', id: 2 }, { name: 'general', id: 3 }, { name: 'health', id: 4 }, { name: 'science', id: 5 }, { name: 'sports', id: 6 }, { name: 'business', id: 7 }, { name: 'technology', id: 8 }, { name: 'Virat Kohli', id: 9 }, { name: 'Narendra Modi', id: 10 }, { name: 'Rain', id: 13 }, { name: 'MK Stalin', id: 12 }, { name: 'Cinema', id: 13 }, { name: 'Floods', id: 14 }, { name: 'politics', id: 15 }, { name: 'Donald Trump', id: 16 }, { name: 'Putin', id: 17 }, { name: 'Ukraine-Russia', id: 18 }, { name: 'Biden', id: 19 }, { name: 'ADMK', id: 20 }, { name: 'Rahul Gandhi', id: 21 }, { name: 'China', id: 22 }, { name: 'corona', id: 23 }, { name: 'elon musk', id: 24 }, { name: 'worldcup', id: 25 }, { name: 'BJP', id: 26 }, { name: 'Taiwan China crisis', id: 27 }, { name: 'job opputunities', id: 28 }, { name: 'tourism', id: 29 }, { name: 'metroplian', id: 30 }]);
+  const [selectedVal, setSelectedVal] = useState([]);
   useEffect(() => {
     const fn = async () => {
       const profileData = await axios.get("http://169.51.205.76:32522/profile?userName=" + sessionStorage.getItem('@user'));
-      console.log(profileData);
+      console.log('data',profileData.data.topics);
       setData(profileData.data);
+      setSelectedVal(profileData.data.topics);
       const likedLinks = profileData.data?.likes.reduce((prev, cur) => {
         return prev.concat(cur.NEWS_ARTICLE_LINK);
       }, [])
@@ -26,7 +30,16 @@ const Profile = () => {
     }
     fn();
   }, [])
-  axios.get("http://169.51.205.76:32522/profile?userName=" + localStorage.getItem('@user'))
+  const onSelect = (selectedList, selectedItem) => {
+    selectedVal.push(selectedItem)
+  }
+
+  const onRemove = (selectedList, removedItem) => {
+    const index = selectedVal.indexOf(removedItem);
+    if (index > -1) {
+      selectedVal.splice(index, 1);
+    }
+  }
   return (
     <>
       {fetched ?
@@ -54,10 +67,10 @@ const Profile = () => {
                     <div className="w-full lg:w-4/12 px-4 lg:order-1">
                       <div className="flex justify-center py-4 lg:pt-4 pt-8">
                         <div className="mr-4 p-3 text-center">
-                          <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{data?.likes.length}</span><span className="text-sm text-blueGray-400">Likes</span>
+                          <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{data?.likes?.length}</span><span className="text-sm text-blueGray-400">Likes</span>
                         </div>
                         <div className="mr-4 p-3 text-center">
-                          <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{data?.bookmarks.length}</span><span className="text-sm text-blueGray-400">Bookmarks</span>
+                          <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{data?.bookmarks?.length}</span><span className="text-sm text-blueGray-400">Bookmarks</span>
                         </div>
                       </div>
                     </div>
@@ -80,41 +93,55 @@ const Profile = () => {
                       <i className="fas fa-university mr-2 text-lg text-blueGray-400"></i>Topics: {data?.user.TOPICS}
                     </div>
                   </div>
-                  <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
-                    <div className="flex flex-wrap justify-center">
-                      <h1 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">Articles Liked</h1>
-                      <Carousel autoPlay>
-                        {data?.likes.map((item, index) =>
-                          <News new={{
-                            title: item.NEWS_TITLE,
-                            url: item.NEWS_ARTICLE_LINK,
-                            description: item.NEWS_DESCRIPTION,
-                            urlToImage: item.NEWS_IMAGE_LINK,
-                            publishedAt: item.NEWS_DATE,
-                            liked: true,
-                            bookmark: bookedArticles?.includes(item.NEWS_ARTICLE_LINK)
-                          }} key={index} />
-                        )}
-                      </Carousel>
+                  {data?.likes.length > 0 ?
+                    <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
+                      <div className="flex flex-wrap justify-center">
+                        <h1 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">Articles Liked</h1>
+                        <Carousel autoPlay>
+                          {data?.likes.map((item, index) =>
+                            <News new={{
+                              title: item.NEWS_TITLE,
+                              url: item.NEWS_ARTICLE_LINK,
+                              description: item.NEWS_DESCRIPTION,
+                              urlToImage: item.NEWS_IMAGE_LINK,
+                              publishedAt: item.NEWS_DATE,
+                              liked: true,
+                              bookmark: bookedArticles?.includes(item.NEWS_ARTICLE_LINK)
+                            }} key={index} />
+                          )}
+                        </Carousel>
+                      </div>
                     </div>
-                  </div>
-                  <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
-                    <div className="flex flex-wrap justify-center">
-                      <h1 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">Articles BookMarked</h1>
-                      <Carousel autoPlay>
-                        {data?.bookmarks.map((item, index) =>
-                          <News new={{
-                            title: item.NEWS_TITLE,
-                            url: item.NEWS_ARTICLE_LINK,
-                            description: item.NEWS_DESCRIPTION,
-                            urlToImage: item.NEWS_IMAGE_LINK,
-                            publishedAt: item.NEWS_DATE,
-                            liked: likedArticles?.includes(item.NEWS_ARTICLE_LINK),
-                            bookmark: true
-                          }} key={index} />
-                        )}
-                      </Carousel>
+                    : null}
+                  {data?.bookmarks?.length ?
+                    <div className="w-full mt-10 py-10 border-t border-blueGray-200 text-center">
+                      <div className="flex justify-center">
+                        <h1 className="text-center text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">Articles BookMarked</h1>
+                        <Carousel autoPlay>
+                          {data?.bookmarks.map((item, index) =>
+                            <News new={{
+                              title: item.NEWS_TITLE,
+                              url: item.NEWS_ARTICLE_LINK,
+                              description: item.NEWS_DESCRIPTION,
+                              urlToImage: item.NEWS_IMAGE_LINK,
+                              publishedAt: item.NEWS_DATE,
+                              liked: likedArticles?.includes(item.NEWS_ARTICLE_LINK),
+                              bookmark: true
+                            }} key={index} />
+                          )}
+                        </Carousel>
+                      </div>
                     </div>
+                    : null}
+                  <div className="text-center">
+                    <h1 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">Update Tags</h1>
+                    <Multiselect
+                      options={options}
+                      selectedValues={selectedVal}
+                      onSelect={onSelect}
+                      onRemove={onRemove}
+                      displayValue="name"
+                    />
                   </div>
                 </div>
               </div>
@@ -124,7 +151,7 @@ const Profile = () => {
                 <div className="flex flex-wrap items-center md:justify-between justify-center">
                   <div className="w-full md:w-6/12 px-4 mx-auto text-center">
                     <div className="text-sm text-white font-semibold py-1">
-                     Made by Saitama Squad
+                      Made by Saitama Squad
                     </div>
                   </div>
                 </div>
