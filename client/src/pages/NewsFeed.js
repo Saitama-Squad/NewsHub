@@ -42,7 +42,6 @@ const NewsFeed = () => {
               ...obj
             };
           }
-          //console.log(likedList,bookedList);
           setLikedArticles(likedList);
           setBookedArticles(bookedList);
           setArticles(data.data.articles);

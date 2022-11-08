@@ -15,9 +15,18 @@ const Profile = () => {
   useEffect(() => {
     const fn = async () => {
       const profileData = await axios.get("http://169.51.205.76:32522/profile?userName=" + sessionStorage.getItem('@user'));
-      console.log('data',profileData.data.topics);
+      console.log('data', profileData.data.topics);
       setData(profileData.data);
-      setSelectedVal(profileData.data.topics);
+      const selval = [];
+      let ids = 0;
+      for (const topic of profileData.data.topics) {
+        selval.push({
+          name: topic,
+          id: ids
+        })
+        ids++;
+      }
+      setSelectedVal(selval);
       const likedLinks = profileData.data?.likes.reduce((prev, cur) => {
         return prev.concat(cur.NEWS_ARTICLE_LINK);
       }, [])
@@ -35,10 +44,15 @@ const Profile = () => {
   }
 
   const onRemove = (selectedList, removedItem) => {
-    const index = selectedVal.indexOf(removedItem);
-    if (index > -1) {
-      selectedVal.splice(index, 1);
+    let newVal = [];
+    for(const topic of selectedVal){
+      if(topic.id==removedItem.id){
+        console.log(topic,removedItem);
+        continue;
+      }
+      newVal.push(topic);
     }
+    setSelectedVal(newVal);
   }
   return (
     <>
@@ -133,7 +147,7 @@ const Profile = () => {
                       </div>
                     </div>
                     : null}
-                  <div className="text-center">
+                  <div className="text-center mb-40">
                     <h1 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">Update Tags</h1>
                     <Multiselect
                       options={options}
@@ -142,6 +156,21 @@ const Profile = () => {
                       onRemove={onRemove}
                       displayValue="name"
                     />
+                    <div className="flex justify-center mt-40">
+                      <button onClick={async() => {
+                        let topicSelected = [];
+                        for(const topics of selectedVal){
+                          topicSelected.push(topics.name);
+                        }
+                        const payload = {
+                          user: sessionStorage.getItem('@user'),
+                          topics: topicSelected
+                        }
+                        await axios.post("http://169.51.205.76:32522/update-profile",payload);
+                      }} className="bg-pink-500 active:bg-pink-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150" type="button">
+                        Update
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
