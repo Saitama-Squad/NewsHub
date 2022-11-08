@@ -112,8 +112,12 @@ def add_action(user, title, url, image_url, date, desc, action):
         return False
 
 def remove_action(user, url):
-    sql = "DELETE FROM NEWS N WHERE N.user={0} AND news_article_link={1}".format(user, url)
-    ibm_db.exec_immediate(conn, sql)
-    
+    try:
+        sql = "DELETE FROM NEWS N WHERE N.user='{0}' AND news_article_link='{1}'".format(user, url)
+        ibm_db.exec_immediate(conn, sql)
+        return True
+    except Exception as e:
+        print(e)
+        return False
 
 
