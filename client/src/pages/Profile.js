@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import { Carousel } from 'react-responsive-carousel';
+import News from "../component/News";
 
 const Profile = () => {
   const [fetched, setFetched] = useState(false);
   const [data, setData] = useState();
+  const [likedArticles, setLikedArticles] = useState([]);
+  const [bookedArticles, setBookedArticles] = useState([]);
   useEffect(() => {
     const fn = async () => {
       const profileData = await axios.get("http://169.51.205.76:32522/profile?userName=" + sessionStorage.getItem('@user'));
       console.log(profileData);
       setData(profileData.data);
+      const likedLinks = profileData.data?.likes.reduce((prev, cur) => {
+        return prev.concat(cur.NEWS_ARTICLE_LINK);
+      }, [])
+      const bookmarkedLinks = profileData.data?.bookmarks.reduce((prev, cur) => {
+        return prev.concat(cur.NEWS_ARTICLE_LINK);
+      }, [])
+      setLikedArticles(likedLinks);
+      setBookedArticles(bookmarkedLinks);
       setFetched(true);
     }
     fn();
@@ -42,10 +54,10 @@ const Profile = () => {
                     <div className="w-full lg:w-4/12 px-4 lg:order-1">
                       <div className="flex justify-center py-4 lg:pt-4 pt-8">
                         <div className="mr-4 p-3 text-center">
-                          <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">22</span><span className="text-sm text-blueGray-400">Likes</span>
+                          <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{data?.likes.length}</span><span className="text-sm text-blueGray-400">Likes</span>
                         </div>
                         <div className="mr-4 p-3 text-center">
-                          <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">10</span><span className="text-sm text-blueGray-400">Bookmarks</span>
+                          <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">{data?.bookmarks.length}</span><span className="text-sm text-blueGray-400">Bookmarks</span>
                         </div>
                       </div>
                     </div>
@@ -70,9 +82,37 @@ const Profile = () => {
                   </div>
                   <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
                     <div className="flex flex-wrap justify-center">
-                      <h1>Articles Liked</h1>
-                      <Carousel>
-                      
+                      <h1 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">Articles Liked</h1>
+                      <Carousel autoPlay>
+                        {data?.likes.map((item, index) =>
+                          <News new={{
+                            title: item.NEWS_TITLE,
+                            url: item.NEWS_ARTICLE_LINK,
+                            description: item.NEWS_DESCRIPTION,
+                            urlToImage: item.NEWS_IMAGE_LINK,
+                            publishedAt: item.NEWS_DATE,
+                            liked: true,
+                            bookmark: bookedArticles?.includes(item.NEWS_ARTICLE_LINK)
+                          }} key={index} />
+                        )}
+                      </Carousel>
+                    </div>
+                  </div>
+                  <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
+                    <div className="flex flex-wrap justify-center">
+                      <h1 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">Articles BookMarked</h1>
+                      <Carousel autoPlay>
+                        {data?.bookmarks.map((item, index) =>
+                          <News new={{
+                            title: item.NEWS_TITLE,
+                            url: item.NEWS_ARTICLE_LINK,
+                            description: item.NEWS_DESCRIPTION,
+                            urlToImage: item.NEWS_IMAGE_LINK,
+                            publishedAt: item.NEWS_DATE,
+                            liked: likedArticles?.includes(item.NEWS_ARTICLE_LINK),
+                            bookmark: true
+                          }} key={index} />
+                        )}
                       </Carousel>
                     </div>
                   </div>
@@ -83,8 +123,8 @@ const Profile = () => {
               <div className="container mx-auto px-4">
                 <div className="flex flex-wrap items-center md:justify-between justify-center">
                   <div className="w-full md:w-6/12 px-4 mx-auto text-center">
-                    <div className="text-sm text-blueGray-500 font-semibold py-1">
-                      Made with <a href="https://www.creative-tim.com/product/notus-js" className="text-blueGray-500 hover:text-gray-800" target="_blank">Notus JS</a> by <a href="https://www.creative-tim.com" className="text-blueGray-500 hover:text-blueGray-800" target="_blank"> Creative Tim</a>.
+                    <div className="text-sm text-white font-semibold py-1">
+                     Made by Saitama Squad
                     </div>
                   </div>
                 </div>
