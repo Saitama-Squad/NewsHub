@@ -42,9 +42,7 @@ const NewsFeed = () => {
               ...obj
             };
           }
-          console.log(likedList,bookedList);
-          setLikedArticles(likedList);
-          setBookedArticles(bookedList);
+          //console.log(likedList,bookedList);
           setLikedArticles(likedList);
           setBookedArticles(bookedList);
           setArticles(data.data.articles);
@@ -62,7 +60,8 @@ const NewsFeed = () => {
         {fetched ?
           <>
             {articles.map((item, index) => {
-              //console.log(likedArticles[`${item.url}`], item.url);
+              if(index==0)
+              console.log('lister',likedArticles,bookedArticles);
               return (
                 <News new={{
                   ...item,
